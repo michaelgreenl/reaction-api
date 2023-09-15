@@ -1,4 +1,6 @@
 node_modules
 **/.terraform/
 .env
+.env.development
+.env.production
 .DS_Store
