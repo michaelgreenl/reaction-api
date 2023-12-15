@@ -21,15 +21,7 @@ const statsDTO = {
     type: INTEGER,
     defaultValue: 0,
   },
-  averageScore: {
-    type: INTEGER,
-    defaultValue: 0,
-  },
   highTime: {
-    type: FLOAT,
-    defaultValue: 0,
-  },
-  averageTime: {
     type: FLOAT,
     defaultValue: 0,
   },

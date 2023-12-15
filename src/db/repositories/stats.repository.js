@@ -19,9 +19,7 @@ const getStatsById = (statsId, userId) =>
       include: [
         'totalGames',
         'highScore',
-        'averageScore',
         'highTime',
-        'averageTime',
       ],
     },
   });
@@ -31,9 +29,7 @@ const updateStats = async ({
   userId,
   highScore,
   totalGames,
-  averageScore,
   highTime,
-  averageTime,
 }) =>
   Stats.update(
     {
@@ -41,9 +37,7 @@ const updateStats = async ({
       userId,
       highScore: parseInt(highScore, 10),
       totalGames: parseInt(totalGames, 10),
-      averageScore: parseInt(averageScore, 10),
       highTime: parseFloat(highTime, 10),
-      averageTime: parseFloat(averageTime, 10),
     },
     {
       where: {

@@ -7,12 +7,10 @@ module.exports.post = async (req, res) => {
     let { highScore, totalGames, averageScore, highTime, averageTime } = stats;
 
     totalGames = totalGames + 1;
-    let updatedStats = {
-      highScore: score > highScore ? score : highScore,
+    const updatedStats = {
       totalGames,
-      averageScore: averageScore + score / totalGames,
+      highScore: score > highScore ? score : highScore,
       highTime: time > highTime ? time : highTime,
-      averageTime: averageTime + time / totalGames,
     };
 
     const newStats = await statsRepository.updateStats({ ...updatedStats });
