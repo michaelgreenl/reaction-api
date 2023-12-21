@@ -7,7 +7,7 @@ const createGame = async ({ userId, score, time }) =>
     time: parseFloat(time, 10),
   });
 
-const getAllGames = async (userId) =>
+const getAllGames = async ({userId, limit, offset}) =>
   Game.findAll({
     where: {
       userId,
@@ -17,6 +17,8 @@ const getAllGames = async (userId) =>
       include: ['score', 'time', 'createdAt'],
       exclude: ['id', 'userId', 'updatedAt'],
     },
+    limit: parseInt(limit, 10) || 10,
+    offset: parseInt(offset, 10) || 0,
   });
 
 const deleteGames = async (userId) => Game.destroy({ where: { userId } });

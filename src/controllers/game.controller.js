@@ -6,8 +6,7 @@ module.exports.post = async (req, res) => {
 
   try {
     let { totalGames, highScore, highTime } = stats;
-    console.log(time);
-    
+
     totalGames = totalGames + 1;
     highScore = score > highScore ? score : highScore;
     highTime = parseFloat(time, 10) > highTime ? parseFloat(time, 10) : highTime;
@@ -36,7 +35,7 @@ module.exports.post = async (req, res) => {
 };
 
 module.exports.get = async (req, res) => {
-  const { userId } = req.query;
-  const games = await gameRepository.getAllGames(userId);
+  const { userId, limit, offset } = req.query;
+  const games = await gameRepository.getAllGames({ userId, limit, offset });
   res.send({ games });
 };
