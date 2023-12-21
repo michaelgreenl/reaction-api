@@ -17,12 +17,11 @@ module.exports.post = async (req) => {
 
 module.exports.put = async (req, res) => {
   const { id, userId, highScore, totalGames, highTime } = req.body;
-  console.log(req.body);
   const stats = await statsRepository.updateStats({
     id,
     userId,
-    highScore,
     totalGames,
+    highScore,
     highTime,
   });
   res.send({ stats });

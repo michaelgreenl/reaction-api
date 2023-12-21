@@ -25,22 +25,21 @@ const getStatsById = (statsId, userId) =>
   });
 
 const updateStats = async ({
-  id,
+  statsId,
   userId,
-  highScore,
   totalGames,
+  highScore,
   highTime,
 }) =>
   Stats.update(
     {
-      id,
-      userId,
-      highScore: parseInt(highScore, 10),
-      totalGames: parseInt(totalGames, 10),
-      highTime: parseFloat(highTime, 10),
+      totalGames,
+      highScore,
+      highTime,
     },
     {
       where: {
+        id: statsId,
         userId,
       },
     }
