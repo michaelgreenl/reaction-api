@@ -39,3 +39,14 @@ module.exports.get = async (req, res) => {
   const games = await gameRepository.getAllGames({ userId, limit, offset });
   res.send({ games });
 };
+
+module.exports.remove = async (req, res) => {
+  try {
+    const { userId, statsId } = req.params;
+    await gameRepository.deleteGames(userId);
+    statsRepository.updateStats({ statsId, userId, totalGames: 0, highScore: 0, highTime: 0 })
+    res.send();
+  } catch (error) {
+    res.send(error);
+  }
+};
