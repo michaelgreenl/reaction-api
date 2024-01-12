@@ -17,10 +17,8 @@ module.exports.get = async (req, res) => {
 
 module.exports.put = async (req, res) => {
   try {
-
     const { settingsId, userId, shrinkTime, difficulty, circleColor, circleSize } = req.body;
-    console.log(req.body);
-    const settings = await settingsRepository.updateSettings({
+    await settingsRepository.updateSettings({
       settingsId,
       userId,
       shrinkTime,
