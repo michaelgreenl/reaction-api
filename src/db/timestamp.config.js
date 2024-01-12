@@ -1,13 +1,13 @@
-const { Sequelize } = require('sequelize');
+const { DataTypes, Sequelize } = require('sequelize');
 
 module.exports = {
   fields: {
     updatedAt: {
-      type: 'TIMESTAMP',
+      type: DataTypes.DATE,
       defaultValue: Sequelize.fn('NOW'),
     },
     createdAt: {
-      type: 'TIMESTAMP',
+      type: DataTypes.DATE,
       defaultValue: Sequelize.fn('NOW'),
     },
   },
