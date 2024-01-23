@@ -1,11 +1,12 @@
 const Sequelize = require('sequelize');
 const sequelizeConfig = require('../../sequelize.config.js');
-const { database, host, username, password, dialect } = sequelizeConfig;
+const { database, host, username, password, dialect, dialectOptions } = sequelizeConfig;
 
 const sequelize = new Sequelize(database, username, password, {
   query: { raw: true },
   host,
   dialect,
+  dialectOptions,
   define: {
     hooks: {
       beforeCreate: (model) => {
