@@ -11,10 +11,6 @@ const statsDTO = {
     type: STRING,
     primaryKey: true,
   },
-  userId: {
-    type: STRING,
-    foreignKey: true,
-  },
   totalGames: {
     type: INTEGER,
     defaultValue: 0,

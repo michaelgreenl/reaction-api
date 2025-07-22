@@ -11,10 +11,6 @@ const settingsDTO = {
     type: STRING,
     primaryKey: true,
   },
-  userId: {
-    type: STRING,
-    foreignKey: true,
-  },
   shrinkTime: {
     type: FLOAT,
     defaultValue: 2.0,
@@ -51,3 +47,4 @@ module.exports = {
   settingsDTO,
   applyAssociations,
 };
+
