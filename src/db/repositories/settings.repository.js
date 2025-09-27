@@ -13,18 +13,17 @@ const getSettingsById = async (settingsId, userId) =>
       userId,
     },
     attributes: {
-      include: ['shrinkTime', 'difficulty', 'circleColor', 'circleSize'],
+      include: ['circleSize', 'shrinkTime', 'spawnInterval'],
       exclude: ['id', 'userId', 'updatedAt', 'createdAt'],
     },
   });
 
-const updateSettings = async ({ settingsId, userId, shrinkTime, difficulty, circleColor, circleSize }) =>
+const updateSettings = async ({ settingsId, userId, circleSize, shrinkTime, spawnInterval }) =>
   Settings.update(
     {
-      shrinkTime,
-      difficulty,
-      circleColor,
       circleSize,
+      shrinkTime,
+      spawnInterval,
     },
     {
       where: {

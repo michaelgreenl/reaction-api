@@ -21,10 +21,9 @@ module.exports.put = async (req, res) => {
     await settingsRepository.updateSettings({
       settingsId,
       userId,
-      shrinkTime,
-      difficulty,
-      circleColor,
       circleSize,
+      shrinkTime,
+      spawnInterval,
     });
     res.send();
   } catch (error) {
