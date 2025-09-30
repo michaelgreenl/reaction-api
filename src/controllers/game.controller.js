@@ -2,7 +2,7 @@ const gameRepository = require('../db/repositories/game.repository');
 const statsRepository = require('../db/repositories/stats.repository');
 
 module.exports.post = async (req, res) => {
-  const { statsId, userId, score, time, stats } = req.body;
+  const { userId, score, time, stats } = req.body;
 
   try {
     let { totalGames, highScore, highTime } = stats;
@@ -12,7 +12,6 @@ module.exports.post = async (req, res) => {
     highTime = parseFloat(time, 10) > highTime ? parseFloat(time, 10) : highTime;
 
     const updateStats = await statsRepository.updateStats({
-      statsId,
       userId,
       totalGames,
       highScore,
@@ -29,7 +28,7 @@ module.exports.post = async (req, res) => {
       res.send({ totalGames, highScore, highTime });
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.send(error);
   }
 };
@@ -44,7 +43,7 @@ module.exports.remove = async (req, res) => {
   try {
     const { userId, statsId } = req.params;
     await gameRepository.deleteGames(userId);
-    statsRepository.updateStats({ statsId, userId, totalGames: 0, highScore: 0, highTime: 0 })
+    statsRepository.updateStats({ userId, totalGames: 0, highScore: 0, highTime: 0 });
     res.send();
   } catch (error) {
     res.send(error);

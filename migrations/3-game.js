@@ -24,7 +24,7 @@ const gameDTO = {
   ...timestampConfig.fields,
 };
 
-'use strict';
+('use strict');
 module.exports = {
   up: async (queryInterface) => {
     await queryInterface.createTable('game', gameDTO);

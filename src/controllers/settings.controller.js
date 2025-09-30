@@ -1,14 +1,14 @@
 const settingsRepository = require('../db/repositories/settings.repository');
 
 module.exports.post = async (req) => {
-  const { settingsId, userId } = req.body;
-  settingsRepository.createSettings({ settingsId, userId });
+  const { userId } = req.body;
+  settingsRepository.createSettings({ userId });
 };
 
 module.exports.get = async (req, res) => {
   try {
-    const { settingsId, userId } = req.query;
-    const settings = await settingsRepository.getSettingsById(settingsId, userId);
+    const { userId } = req.query;
+    const settings = await settingsRepository.getSettingsById(userId);
     res.json({ ...settings });
   } catch (error) {
     res.send(error);
@@ -17,15 +17,14 @@ module.exports.get = async (req, res) => {
 
 module.exports.put = async (req, res) => {
   try {
-    const { settingsId, userId, shrinkTime, difficulty, circleColor, circleSize } = req.body;
+    const { userId, circleSize, spawnInterval, shrinkTime } = req.body;
     await settingsRepository.updateSettings({
-      settingsId,
       userId,
       circleSize,
-      shrinkTime,
       spawnInterval,
+      shrinkTime,
     });
-    res.send();
+    res.json({ ok: true });
   } catch (error) {
     res.send(error);
   }

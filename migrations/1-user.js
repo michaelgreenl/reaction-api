@@ -9,14 +9,6 @@ const userDTO = {
     defaultValue: UUIDV4,
     primaryKey: true,
   },
-  settingsId: {
-    type: UUID,
-    defaultValue: UUIDV4,
-  },
-  statsId: {
-    type: UUID,
-    defaultValue: UUIDV4,
-  },
   username: {
     type: STRING,
     unique: true,
@@ -30,15 +22,10 @@ const userDTO = {
     type: BOOLEAN,
     defaultValue: '0',
   },
-  closeGameSettingsOptOut: {
-    type: BOOLEAN,
-    defaultValue: '0',
-  },
   ...timestampConfig.fields,
 };
 
-
-'use strict';
+('use strict');
 module.exports = {
   up: async (queryInterface) => {
     await queryInterface.createTable('user', userDTO);

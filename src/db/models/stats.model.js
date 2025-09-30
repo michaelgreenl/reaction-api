@@ -7,7 +7,7 @@ const { STRING, INTEGER, FLOAT } = DataTypes;
 class Stats extends Model {}
 
 const statsDTO = {
-  id: {
+  userId: {
     type: STRING,
     primaryKey: true,
   },

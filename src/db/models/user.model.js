@@ -12,14 +12,6 @@ const userDTO = {
     defaultValue: UUIDV4,
     primaryKey: true,
   },
-  settingsId: {
-    type: UUID,
-    defaultValue: UUIDV4,
-  },
-  statsId: {
-    type: UUID,
-    defaultValue: UUIDV4,
-  },
   username: {
     type: STRING,
     unique: true,
@@ -30,10 +22,6 @@ const userDTO = {
     allowNull: false,
   },
   saveGameSettingsOptOut: {
-    type: BOOLEAN,
-    defaultValue: '0',
-  },
-  closeGameSettingsOptOut: {
     type: BOOLEAN,
     defaultValue: '0',
   },

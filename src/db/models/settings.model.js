@@ -7,13 +7,9 @@ const { STRING, INTEGER, FLOAT } = DataTypes;
 class Settings extends Model {}
 
 const settingsDTO = {
-  id: {
+  userId: {
     type: STRING,
     primaryKey: true,
-  },
-  shrinkTime: {
-    type: FLOAT,
-    defaultValue: 2.0,
   },
   circleSize: {
     type: INTEGER,

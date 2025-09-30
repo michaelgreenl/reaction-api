@@ -21,10 +21,10 @@ module.exports.post = async (req, res) => {
     delete userData.password;
     const token = jwt.sign({ userData });
 
-    const { id, settingsId, statsId } = user;
-    await statsRepository.createStats({ statsId, userId: id });
-    await settingsRepository.createSettings({ settingsId, userId: id });
-    res.send({ id, statsId, settingsId, token });
+    const { id } = user;
+    await statsRepository.createStats({ userId: id });
+    await settingsRepository.createSettings({ userId: id });
+    res.send({ id, token });
   } catch (error) {
     if (error.errors && error.errors[0].type === 'unique violation') {
       res.status(UNPROCESSABLE_ENTITY).json({ message: 'Username is already in use.' });

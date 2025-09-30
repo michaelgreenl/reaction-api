@@ -12,6 +12,10 @@ const gameDTO = {
     defaultValue: UUIDV4,
     primaryKey: true,
   },
+  userId: {
+    type: STRING,
+    foreignKey: true,
+  },
   score: {
     type: INTEGER,
     allowNull: false,

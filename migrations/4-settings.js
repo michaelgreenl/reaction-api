@@ -4,13 +4,9 @@ const timestampConfig = require('../src/db/timestamp.config');
 const { STRING, INTEGER, FLOAT } = DataTypes;
 
 const settingsDTO = {
-  id: {
-    type: STRING,
-    primaryKey: true,
-  },
   userId: {
     type: STRING,
-    foreignKey: true,
+    primaryKey: true,
   },
   circleSize: {
     type: INTEGER,
