@@ -21,10 +21,6 @@ const userDTO = {
     type: STRING,
     allowNull: false,
   },
-  saveGameSettingsOptOut: {
-    type: BOOLEAN,
-    defaultValue: '0',
-  },
   ...timestampConfig.fields,
 };
 
