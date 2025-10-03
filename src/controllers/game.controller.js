@@ -2,10 +2,17 @@ const gameRepository = require('../db/repositories/game.repository');
 const statsRepository = require('../db/repositories/stats.repository');
 
 module.exports.post = async (req, res) => {
-  const { userId, score, time, stats } = req.body;
+  const { userId, score, time, settings, stats } = req.body;
 
   try {
     let { totalGames, highScore, highTime } = stats;
+
+    gameRepository.createGame({
+      userId,
+      score,
+      time,
+      settings,
+    });
 
     totalGames = totalGames + 1;
     highScore = score > highScore ? score : highScore;
@@ -16,12 +23,6 @@ module.exports.post = async (req, res) => {
       totalGames,
       highScore,
       highTime,
-    });
-
-    gameRepository.createGame({
-      userId,
-      score,
-      time,
     });
 
     if (updateStats) {
