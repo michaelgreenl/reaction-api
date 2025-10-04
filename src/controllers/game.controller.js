@@ -35,9 +35,26 @@ module.exports.post = async (req, res) => {
 };
 
 module.exports.get = async (req, res) => {
-  const { userId, limit, offset } = req.query;
-  const games = await gameRepository.getAllGames({ userId, limit, offset });
-  res.send({ games });
+  try {
+    const { userId, limit, offset } = req.query;
+    const games = await gameRepository.getAllGames({ userId, limit, offset });
+    res.send({ games });
+  } catch (error) {
+    console.error(error);
+    res.send(error);
+  }
+};
+
+module.exports.getGamesBySetting = async (req, res) => {
+  try {
+    const { userId, limit, offset, filters } = req.query;
+
+    const games = await gameRepository.getGamesBySetting({ userId, limit, offset, filters: JSON.parse(filters) });
+    res.send({ games });
+  } catch (error) {
+    console.error(error);
+    res.send(error);
+  }
 };
 
 module.exports.remove = async (req, res) => {

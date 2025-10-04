@@ -8,6 +8,27 @@ const createGame = async ({ userId, score, time, settings }) =>
     settings,
   });
 
+const getGamesBySetting = async ({ userId, limit, offset, filters }) => {
+  const whereConditions = {
+    userId,
+  };
+
+  for (const filter of filters) {
+    whereConditions[`settings.${filter.filter}`] = filter.value;
+  }
+
+  return Game.findAll({
+    where: whereConditions,
+    order: [['createdAt', 'DESC']],
+    attributes: {
+      include: ['score', 'time', 'settings', 'createdAt'],
+      exclude: ['id', 'userId', 'updatedAt'],
+    },
+    limit: parseInt(limit, 10) || 10,
+    offset: parseInt(offset, 10) || 0,
+  });
+};
+
 const getAllGames = async ({ userId, limit, offset, settings }) =>
   Game.findAll({
     where: {
@@ -26,6 +47,7 @@ const deleteGames = async (userId) => Game.destroy({ where: { userId } });
 
 module.exports = {
   getAllGames,
+  getGamesBySetting,
   createGame,
   deleteGames,
 };
