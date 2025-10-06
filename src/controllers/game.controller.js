@@ -36,8 +36,8 @@ module.exports.post = async (req, res) => {
 
 module.exports.get = async (req, res) => {
   try {
-    const { userId, limit, offset } = req.query;
-    const games = await gameRepository.getAllGames({ userId, limit, offset });
+    const { userId, limit, offset, sortedBy, sortedOrder } = req.query;
+    const games = await gameRepository.getAllGames({ userId, limit, offset, sortedBy, sortedOrder });
     res.send({ games });
   } catch (error) {
     console.error(error);
@@ -47,9 +47,16 @@ module.exports.get = async (req, res) => {
 
 module.exports.getGamesBySetting = async (req, res) => {
   try {
-    const { userId, limit, offset, filters } = req.query;
+    const { userId, limit, offset, filters, sortedBy, sortedOrder } = req.query;
 
-    const games = await gameRepository.getGamesBySetting({ userId, limit, offset, filters: JSON.parse(filters) });
+    const games = await gameRepository.getGamesBySetting({
+      userId,
+      limit,
+      offset,
+      filters: JSON.parse(filters),
+      sortedBy,
+      sortedOrder,
+    });
     res.send({ games });
   } catch (error) {
     console.error(error);
