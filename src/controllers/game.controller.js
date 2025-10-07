@@ -25,9 +25,7 @@ module.exports.post = async (req, res) => {
       highTime,
     });
 
-    if (updateStats) {
-      res.send({ totalGames, highScore, highTime });
-    }
+    res.send({ totalGames, highScore, highTime });
   } catch (error) {
     console.error(error);
     res.send(error);
