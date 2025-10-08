@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const timestampConfig = require('../src/db/timestamp.config');
 
-const { UUID, UUIDV4, STRING, INTEGER, FLOAT } = DataTypes;
+const { UUID, UUIDV4, STRING, INTEGER, FLOAT, JSON } = DataTypes;
 
 const gameDTO = {
   id: {
@@ -21,10 +21,14 @@ const gameDTO = {
     type: FLOAT,
     allowNull: false,
   },
+  settings: {
+    type: JSON,
+    allowNull: false,
+  },
   ...timestampConfig.fields,
 };
 
-'use strict';
+('use strict');
 module.exports = {
   up: async (queryInterface) => {
     await queryInterface.createTable('game', gameDTO);

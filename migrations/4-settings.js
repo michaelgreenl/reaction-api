@@ -4,34 +4,26 @@ const timestampConfig = require('../src/db/timestamp.config');
 const { STRING, INTEGER, FLOAT } = DataTypes;
 
 const settingsDTO = {
-  id: {
-    type: STRING,
-    primaryKey: true,
-  },
   userId: {
     type: STRING,
-    foreignKey: true,
-  },
-  shrinkTime: {
-    type: FLOAT,
-    defaultValue: 2.0,
-  },
-  difficulty: {
-    type: STRING,
-    defaultValue: 'medium',
-  },
-  circleColor: {
-    type: STRING,
-    defaultValue: '#FFFFFF',
+    primaryKey: true,
   },
   circleSize: {
     type: INTEGER,
     defaultValue: 100,
   },
+  spawnInterval: {
+    type: FLOAT,
+    defaultValue: 1.0,
+  },
+  shrinkTime: {
+    type: FLOAT,
+    defaultValue: 1.0,
+  },
   ...timestampConfig.fields,
 };
 
-'use strict';
+('use strict');
 module.exports = {
   up: async (queryInterface) => {
     await queryInterface.createTable('settings', settingsDTO);

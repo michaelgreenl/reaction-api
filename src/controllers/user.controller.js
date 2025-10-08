@@ -11,20 +11,59 @@ module.exports.get = async (req, res) => {
   res.send({ users: await userRepository.getAllUsers({ limit, offset }) });
 };
 
+module.exports.checkAuth = async (req, res) => {
+  try {
+    const token = req.cookies.token;
+
+    if (!token) {
+      return res.json({ success: false, message: 'Not authenticated', id: null, username: null });
+    }
+
+    const decoded = jwt.verify(token);
+    const userId = decoded.id;
+
+    const user = await userRepository.getUserById(userId);
+    if (!user) {
+      return res.json({ success: false, message: 'User not found', id: null, username: null });
+    } else {
+      const stats = await statsRepository.getStatsById(userId);
+      const settings = await settingsRepository.getSettingsById(userId);
+      res.json({
+        success: true,
+        message: 'Authentication successful',
+        id: user.id,
+        username: user.username,
+        stats,
+        settings,
+      });
+    }
+  } catch (error) {
+    console.error('Auth check error:', error);
+    res.json({ success: false, message: 'Authentication failed: ' + error.message });
+  }
+};
+
 module.exports.post = async (req, res) => {
   try {
     const { username, password } = req.body;
     const hash = await bcrypt.hash(password, 10);
     const user = await userRepository.createUser({ username, password: hash });
 
-    let userData = { ...user.dataValues };
-    delete userData.password;
-    const token = jwt.sign({ userData });
+    const token = jwt.sign({ id: user.id, username: user.username });
 
-    const { id, settingsId, statsId } = user;
-    await statsRepository.createStats({ statsId, userId: id });
-    await settingsRepository.createSettings({ settingsId, userId: id });
-    res.send({ id, statsId, settingsId, token });
+    const { id } = user;
+    await statsRepository.createStats({ userId: id });
+    await settingsRepository.createSettings({ userId: id });
+
+    // Set token as httpOnly cookie
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    res.send({ id, username: user.username });
   } catch (error) {
     if (error.errors && error.errors[0].type === 'unique violation') {
       res.status(UNPROCESSABLE_ENTITY).json({ message: 'Username is already in use.' });
@@ -78,9 +117,24 @@ module.exports.login = async (req, res) => {
       return;
     }
 
-    const token = jwt.sign({ user });
-    user = { ...user };
-    res.send({ ...user, token });
+    const token = jwt.sign({ id: user.id, username: user.username });
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    res.send({ id: user.id, username: user.username });
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+module.exports.logout = async (req, res) => {
+  try {
+    res.clearCookie('token');
+    res.json({ success: true, message: 'Logged out successfully' });
   } catch (error) {
     res.send(error);
   }

@@ -7,13 +7,9 @@ const { STRING, INTEGER, FLOAT } = DataTypes;
 class Stats extends Model {}
 
 const statsDTO = {
-  id: {
-    type: STRING,
-    primaryKey: true,
-  },
   userId: {
     type: STRING,
-    foreignKey: true,
+    primaryKey: true,
   },
   totalGames: {
     type: INTEGER,

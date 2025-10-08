@@ -2,7 +2,7 @@ const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../sequelize-connection');
 const timestampConfig = require('../timestamp.config');
 
-const { UUID, UUIDV4, STRING, INTEGER, FLOAT } = DataTypes;
+const { UUID, UUIDV4, STRING, INTEGER, FLOAT, JSON } = DataTypes;
 
 class Game extends Model {}
 
@@ -22,6 +22,10 @@ const gameDTO = {
   },
   time: {
     type: FLOAT,
+    allowNull: false,
+  },
+  settings: {
+    type: JSON,
     allowNull: false,
   },
   ...timestampConfig.fields,

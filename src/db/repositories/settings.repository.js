@@ -1,34 +1,30 @@
 const { Settings } = require('../models');
 
-const createSettings = async ({ settingsId, userId }) =>
+const createSettings = async ({ userId }) =>
   Settings.create({
-    id: settingsId,
     userId,
   });
 
-const getSettingsById = async (settingsId, userId) =>
+const getSettingsById = async (userId) =>
   Settings.findOne({
     where: {
-      id: settingsId,
       userId,
     },
     attributes: {
-      include: ['shrinkTime', 'difficulty', 'circleColor', 'circleSize'],
+      include: ['circleSize', 'spawnInterval', 'shrinkTime'],
       exclude: ['id', 'userId', 'updatedAt', 'createdAt'],
     },
   });
 
-const updateSettings = async ({ settingsId, userId, shrinkTime, difficulty, circleColor, circleSize }) =>
+const updateSettings = async ({ userId, circleSize, spawnInterval, shrinkTime }) =>
   Settings.update(
     {
-      shrinkTime,
-      difficulty,
-      circleColor,
       circleSize,
+      spawnInterval,
+      shrinkTime,
     },
     {
       where: {
-        id: settingsId,
         userId,
       },
     },

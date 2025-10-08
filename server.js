@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3001;
 db.sequelize
   .sync()
   .then(() => {
-    app.listen(PORT, () => console.log('server running')); 
+    app.listen(PORT, () => console.log('server running'));
   })
   .catch((error) => {
     console.error(error);
