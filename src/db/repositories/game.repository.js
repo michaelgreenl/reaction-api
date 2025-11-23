@@ -1,3 +1,5 @@
+const { sequelize } = require('../sequelize-connection.js');
+const { Op } = require('sequelize');
 const { Game } = require('../models');
 
 const createGame = async ({ userId, score, time, settings }) =>
@@ -9,16 +11,25 @@ const createGame = async ({ userId, score, time, settings }) =>
   });
 
 const getGamesBySetting = async ({ userId, limit, offset, filters, sortedBy, sortedOrder }) => {
-  const whereConditions = {
-    userId,
-  };
+  const conditions = [{ userId }];
 
   for (const filter of filters) {
-    whereConditions[`settings.${filter.filter}`] = filter.value;
+    conditions.push(
+      sequelize.where(
+        sequelize.cast(
+          sequelize.fn(
+            'json_unquote',
+            sequelize.fn('json_extract', sequelize.col('settings'), sequelize.literal(`'$.${filter.filter}'`)),
+          ),
+          'DECIMAL(10,2)',
+        ),
+        filter.value,
+      ),
+    );
   }
 
   return Game.findAll({
-    where: whereConditions,
+    where: { [Op.and]: conditions },
     order: [[sortedBy, sortedOrder]],
     attributes: {
       include: ['score', 'time', 'settings', 'createdAt'],
