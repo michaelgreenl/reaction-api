@@ -17,10 +17,7 @@ const getGamesBySetting = async ({ userId, limit, offset, filters, sortedBy, sor
     conditions.push(
       sequelize.where(
         sequelize.cast(
-          sequelize.fn(
-            'json_unquote',
-            sequelize.fn('json_extract', sequelize.col('settings'), sequelize.literal(`'$.${filter.filter}'`)),
-          ),
+          sequelize.fn('json_extract_path_text', sequelize.col('settings'), filter.filter),
           'DECIMAL(10,2)',
         ),
         filter.value,

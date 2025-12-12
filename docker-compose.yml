@@ -1,22 +1,21 @@
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: reaction-mysql
+  postgres:
+    image: postgres:16
+    container_name: reaction-postgres
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: reaction_db
-      MYSQL_USER: reaction_user
-      MYSQL_PASSWORD: reaction_pass
-      MYSQL_ROOT_PASSWORD: rootpass
+      POSTGRES_DB: reaction_db
+      POSTGRES_USER: reaction_user
+      POSTGRES_PASSWORD: reaction_pass
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD-SHELL", "pg_isready -U reaction_user -d reaction_db"]
       interval: 10s
       timeout: 5s
       retries: 5
 
 volumes:
-  mysql_data:
+  postgres_data:
