@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const timestampConfig = require('../src/db/timestamp.config');
 
-const { UUID, UUIDV4, STRING, INTEGER, FLOAT, JSON } = DataTypes;
+const { UUID, UUIDV4, STRING, INTEGER, FLOAT, JSONB } = DataTypes;
 
 const gameDTO = {
   id: {
@@ -22,7 +22,7 @@ const gameDTO = {
     allowNull: false,
   },
   settings: {
-    type: JSON,
+    type: JSONB,
     allowNull: false,
   },
   ...timestampConfig.fields,
