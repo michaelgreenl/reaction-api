@@ -14,18 +14,11 @@ const getGamesBySetting = async ({ userId, limit, offset, filters, sortedBy, sor
   const conditions = [{ userId }];
 
   for (const filter of filters) {
-    conditions.push(
-      sequelize.where(
-        sequelize.cast(
-          sequelize.fn(
-            'json_unquote',
-            sequelize.fn('json_extract', sequelize.col('settings'), sequelize.literal(`'$.${filter.filter}'`)),
-          ),
-          'DECIMAL(10,2)',
-        ),
-        filter.value,
-      ),
-    );
+    conditions.push({
+      settings: {
+        [filter.filter]: filter.value,
+      },
+    });
   }
 
   return Game.findAll({

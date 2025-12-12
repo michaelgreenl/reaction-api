@@ -4,17 +4,23 @@ dotenv.config({
   path: `.env.${environment}`,
 });
 
-const { SQL_DATABASE, SQL_HOST, SQL_USER, SQL_PASSWORD, SQL_PORT } = process.env;
+const { POSTGRES_DATABASE, POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_PORT } = process.env;
 module.exports = {
-  database: SQL_DATABASE,
-  dialect: 'mysql',
-  host: SQL_HOST,
-  port: SQL_PORT,
-  username: SQL_USER,
-  password: SQL_PASSWORD,
-  dialectOptions: {
-    bigNumberStrings: true,
-  },
+  database: POSTGRES_DATABASE,
+  dialect: 'postgres',
+  host: POSTGRES_HOST,
+  port: POSTGRES_PORT,
+  username: POSTGRES_USER,
+  password: POSTGRES_PASSWORD,
+  dialectOptions:
+    environment === 'production'
+      ? {
+          ssl: {
+            require: true,
+            rejectUnauthorized: false,
+          },
+        }
+      : {},
   seederStorage: 'sequelize',
   seederStorageTableName: 'SequelizeSeedMeta',
 };
