@@ -55,11 +55,10 @@ module.exports.post = async (req, res) => {
     await statsRepository.createStats({ userId: id });
     await settingsRepository.createSettings({ userId: id });
 
-    // Set token as httpOnly cookie
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
       maxAge: 24 * 60 * 60 * 1000,
     });
 
@@ -121,7 +120,7 @@ module.exports.login = async (req, res) => {
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
       maxAge: 24 * 60 * 60 * 1000,
     });
 
