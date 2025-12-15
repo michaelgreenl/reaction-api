@@ -7,39 +7,39 @@ const { UUID, UUIDV4, STRING, BOOLEAN } = DataTypes;
 class User extends Model {}
 
 const userDTO = {
-  id: {
-    type: UUID,
-    defaultValue: UUIDV4,
-    primaryKey: true,
-  },
-  username: {
-    type: STRING,
-    unique: true,
-    allowNull: false,
-  },
-  password: {
-    type: STRING,
-    allowNull: false,
-  },
-  ...timestampConfig.fields,
+    id: {
+        type: UUID,
+        defaultValue: UUIDV4,
+        primaryKey: true,
+    },
+    username: {
+        type: STRING,
+        unique: true,
+        allowNull: false,
+    },
+    password: {
+        type: STRING,
+        allowNull: false,
+    },
+    ...timestampConfig.fields,
 };
 
 User.init(userDTO, {
-  ...timestampConfig.tableOptions,
-  sequelize,
-  tableName: 'user',
+    ...timestampConfig.tableOptions,
+    sequelize,
+    tableName: 'user',
 });
 
 const applyAssociations = (models) => {
-  const { Settings, Stats, Game } = models;
+    const { Settings, Stats, Game } = models;
 
-  User.hasOne(Settings);
-  User.hasOne(Stats);
-  User.hasMany(Game);
+    User.hasOne(Settings);
+    User.hasOne(Stats);
+    User.hasMany(Game);
 };
 
 module.exports = {
-  model: User,
-  userDTO,
-  applyAssociations,
+    model: User,
+    userDTO,
+    applyAssociations,
 };

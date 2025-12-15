@@ -7,39 +7,39 @@ const { STRING, INTEGER, FLOAT } = DataTypes;
 class Stats extends Model {}
 
 const statsDTO = {
-  userId: {
-    type: STRING,
-    primaryKey: true,
-  },
-  totalGames: {
-    type: INTEGER,
-    defaultValue: 0,
-  },
-  highScore: {
-    type: INTEGER,
-    defaultValue: 0,
-  },
-  highTime: {
-    type: FLOAT,
-    defaultValue: 0,
-  },
-  ...timestampConfig.fields,
+    userId: {
+        type: STRING,
+        primaryKey: true,
+    },
+    totalGames: {
+        type: INTEGER,
+        defaultValue: 0,
+    },
+    highScore: {
+        type: INTEGER,
+        defaultValue: 0,
+    },
+    highTime: {
+        type: FLOAT,
+        defaultValue: 0,
+    },
+    ...timestampConfig.fields,
 };
 
 Stats.init(statsDTO, {
-  ...timestampConfig.tableOptions,
-  sequelize,
-  tableName: 'stats',
+    ...timestampConfig.tableOptions,
+    sequelize,
+    tableName: 'stats',
 });
 
 const applyAssociations = (models) => {
-  const { User } = models;
+    const { User } = models;
 
-  Stats.belongsTo(User);
+    Stats.belongsTo(User);
 };
 
 module.exports = {
-  model: Stats,
-  statsDTO,
-  applyAssociations,
+    model: Stats,
+    statsDTO,
+    applyAssociations,
 };

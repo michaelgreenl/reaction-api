@@ -7,17 +7,17 @@ const jsonMiddleware = require('../middlewares/json.middleware.js');
 const routes = require('../routes');
 
 const config = [
-  helmet,
-  limiter,
-  speedLimiter,
-  cors,
-  jsonMiddleware,
-  bodyParser.json(),
-  cookieParser(),
-  bodyParser.urlencoded({
-    extended: true,
-  }),
-  routes,
+    helmet,
+    limiter,
+    speedLimiter,
+    cors,
+    jsonMiddleware,
+    bodyParser.json(),
+    cookieParser(),
+    bodyParser.urlencoded({
+        extended: true,
+    }),
+    routes,
 ];
 
 module.exports = config;
