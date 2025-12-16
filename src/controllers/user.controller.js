@@ -55,13 +55,6 @@ module.exports.post = async (req, res) => {
         await statsRepository.createStats({ userId: id });
         await settingsRepository.createSettings({ userId: id });
 
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
-            maxAge: 24 * 60 * 60 * 1000,
-        });
-
         res.send({ id, username: user.username });
     } catch (error) {
         if (error.errors && error.errors[0].type === 'unique violation') {
@@ -132,7 +125,12 @@ module.exports.login = async (req, res) => {
 
 module.exports.logout = async (req, res) => {
     try {
-        res.clearCookie('token');
+        res.clearCookie('token', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+            maxAge: 0,
+        });
         res.json({ success: true, message: 'Logged out successfully' });
     } catch (error) {
         res.send(error);
