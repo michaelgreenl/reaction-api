@@ -1,42 +1,45 @@
-<div align='center' style='padding: 0 10%'>
-  <img src='images/logo.png' height='65'>
-  <h1>Reaction</h1>
-  
-  <p style='padding: 0 15%'>
-    This web app is an aim trainer game where the user can test and improve their speed and reaction time. The user can also create an account, allowing them to keep track of their game statistics over the long term.
-  </p>
-  <a style='font-size: 15px' href='https://reaction-chi.vercel.app/Play'> View Site </a>
-  · 
-  <a style='font-size: 15px' href='https://github.com/michaelgreenl/reaction/issues'>Report Issue</a>
-</div>
+# Reaction Server ⚡
+> A full-stack application engineered with a decoupled architecture, utilizing the Repository Pattern to securely manage authentication, game metrics, and user persistence.
 
-### Technologies Used
+[![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/) [![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/) 
+[![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=sequelize&logoColor=white)](https://sequelize.org/) [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/) [![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://render.com/)
+***
+### 🔗 Quick Links
+- **🚀 [Live Site](https://trainreaction.gg)** 
+- **🎥 [Demo Video](https://michaelgreenl.net/#projects?slug=reaction&autoplay=true)** 
+- **🖥️ [Frontend Repository](https://github.com/michaelgreenl/reaction-client)** 
+- **💼 [Portfolio Link](https://michaelgreenl.net/#projects?slug=reaction&autoplay=false)** 
 
-[![React.js]][React-url] [![Node.js]][Node-url] [![Express.js]][Express-url] [![MySQL]][MySQL-url] [![AWS]][AWS-url]
+---
+## 📖 Overview
+> A production-ready Node.js/Express API designed to securely manage user authentication, game statistics, and player settings with a focus on modular architecture and robust security standards.
 
-### Repositories
+Built on Node.js and Express, this API leverages PostgreSQL as its primary data store, orchestrated via Sequelize for object-relational mapping. The architecture strictly follows the MVC pattern extended with a Repository Layer, ensuring a clean separation between HTTP handling, business logic, and database interactions.
 
-- Frontend: [https://github.com/michaelgreenl/reaction](https://github.com/michaelgreenl/reaction)
-- API: [https://github.com/michaelgreenl/reaction-api](https://github.com/michaelgreenl/reaction-api)
+---
+## ⚡ Technical Highlights
+#### Repository Pattern Implementation
+Database queries are abstracted away from Controllers into dedicated Repositories (`src/db/repositories`), promoting cleaner code and easier testing.
+#### Centralized Middleware Configuration
+Unlike typical Express apps that clutter `app.js`, this project aggregates middleware (CORS, Helmet, Rate Limiting) into a modular configuration array in `src/config/index.js`.
+#### Defense-in-Depth Security
+Implements meaningful security layers including `helmet` for header hardening, `express-rate-limit` for DDoS protection, and `express-slow-down` to mitigate brute-force attacks.
+#### Orchestrated Entity Initialization
+The User creation flow (`user.controller.js`) automatically provisions dependent resources (Stats and Settings) in a unified sequence, ensuring data consistency for new accounts.
 
-### Contact
+---
+## 🏗️ Architecture & Design Decisions 
+#### HTTP-Only Cookies for Auth
+Instead of storing JWTs in LocalStorage (which is vulnerable to XSS), I use `Boxed Cookies` (HTTP-Only, Secure, SameSite). This decision prioritizes security over the slight convenience of client-side token access.
+#### Declarative App Entry Point
+`app.js` was intentionally kept minimal by offloading setup logic to `src/config`. This makes the application entry point readable at a glance and simplifies the addition of new global middleware.
 
-- Email: [@greenmichael5000@gmail.com](@greenmichael5000@gmail.com)
-- LinkedIn: [https://www.linkedin.com/in/michaelgreen5/](https://www.linkedin.com/in/michaelgreen5/)
+---
+### 🛠️ Tech Stack
+- **Runtime:** Node.js
+- **Framework:** Express.js
+- **Database:** PostgreSQL, Sequelize ORM
+- **Infrastructure:** Docker, Render
 
-[gmail-url]: @greenmichael5000@gmail.com
-[gmail]: https://skillicons.dev/icons?i=gmail
-[linkedIn-url]: https://www.linkedin.com/in/michaelgreen5/
-[linkedIn]: https://skillicons.dev/icons?i=linkedin
-[screenshot-url]: public/assets/images/readme-screenshot.png
-[React.js]: https://skillicons.dev/icons?i=react
-[React-url]: https://reactjs.org/
-[Node.js]: https://skillicons.dev/icons?i=nodejs
-[Node-url]: https://nodejs.org/docs/latest/api/
-[Express.js]: https://skillicons.dev/icons?i=express
-[Express-url]: https://expressjs.com/
-[MySQL]: https://skillicons.dev/icons?i=mysql
-[MySQL-url]: https://dev.mysql.com/doc/
-[AWS]: https://skillicons.dev/icons?i=aws
-[AWS-url]: https://docs.aws.amazon.com/rds/
-[github]: https://skillicons.dev/icons?i=github
+---
